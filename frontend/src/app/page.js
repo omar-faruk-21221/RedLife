@@ -1,7 +1,11 @@
+
+import Bannar from "@/components/Bannar";
 import Image from "next/image";
 
 export default function Home() {
   return (
-   <div className="text-4xl">hello world</div>
+   <div className="">
+     <Bannar></Bannar>
+    </div>
   );
 }

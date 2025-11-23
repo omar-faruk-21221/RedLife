@@ -1,54 +1,5 @@
-/* ==== font import ====  */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 @import "tailwindcss";
-
-@plugin "daisyui" {
-  themes: light --default, dark --prefersdark;
-}
-
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
-* {
-  font-family: "Poppins", sans-serif;
-  font-style: normal;
-}
-
-body {
-  @apply bg-base-200
-  /* background-color: #E9E9E9; */
-}
-
-@plugin "daisyui/theme" {
-  name: "light";
-  default: true;
-  --color-base-100: #FFFFFF;        /* Primary background */
-  --color-base-200: #F8F8F8;        /* Secondary background */
-  --color-base-300: #FFE5E5;        /* Soft red highlight */
-  --color-base-content: #1F1F1F;    /* Default text */
-
-  --color-primary: #E63946;         /* Blood donation red */
-  --color-secondary: #F08080;       /* Soft red accent */
-  --color-accent: #FFB6B9;          /* Buttons / hover / highlights */
-
-  --color-primary-content: #FFFFFF; /* Text on primary buttons */
-  --color-textColor: #1F1F1F;       /* General readable text */
-}
-
-/* ==== Custom Buttons ==== */
-.btn-primary {
-  @apply bg-gradient-to-r from-[#E63946] to-[#F08080] text-white;
-}
-
-.btn-primary:hover {
-  @apply opacity-90;
-}
-
-/* Optional: secondary buttons */
-.btn-secondary {
-  @apply bg-[#F08080] text-white;
-}
-
-.btn-secondary:hover {
-  @apply opacity-90;
-}
+@plugin "daisyui";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
