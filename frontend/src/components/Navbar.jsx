@@ -8,16 +8,19 @@ export default function Navbar() {
         <Link href="/">Home</Link>
       </li>
       <li>
-        <Link href="/products">Add Product</Link>
+        <Link href="/all-donars">All Donars</Link>
       </li>
       <li>
-        <Link href="/contact">Manage Products</Link>
+        <Link href="/add-donar">Add Donar</Link>
+      </li>
+      <li>
+        <Link href="/manage-Donar">Manage Donar</Link>
       </li>
     </>
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-sm px-4 lg:px-8 sticky top-0 z-50">
+    <div className="navbar backdrop-blur-lg shadow-sm px-4 lg:px-8 sticky top-0 z-50">
       {/* Navbar Start */}
       <div className="navbar-start">
         {/* Mobile Dropdown */}
@@ -59,7 +62,13 @@ export default function Navbar() {
       {/* Navbar End */}
       <div className="navbar-end flex items-center gap-2">
         <Link href="/login" className="btn btn-primary">
-          Login
+          Log In
+        </Link>
+        <Link href="/register" className="btn btn-accent text-base-100">
+          Register
+        </Link>
+        <Link href="/" className="btn btn-secondary text-base-100">
+         Log Out
         </Link>
       </div>
     </div>

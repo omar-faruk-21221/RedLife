@@ -11,9 +11,9 @@ import bannarImg123 from "../../public/assets/bannar/bannar-123.jpg";
 
 export default function Bannar() {
   return (
-  <div>
+  <div className="relative">
       <div
-        className="min-h-[700px] bg-primary-content max-w-7xl mx-auto my-5 rounded-2xl object-fill bg-cover bg-center flex flex-1 justify-end items-end"
+        className="min-h-[700px] bg-primary-content object-fill bg-cover bg-center flex flex-1 justify-end items-end"
         style={{ backgroundImage: `url(${bannarImg123.src})` }}
       >
         <button className="btn btn-primary mx-auto mb-15 md:px-15 text-xl md:py-6">Learn More</button>

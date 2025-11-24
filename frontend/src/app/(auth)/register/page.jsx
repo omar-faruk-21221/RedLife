@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Page({ handleRegister, handleGoogleLogIn }) {
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 p-4">
       <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
@@ -72,7 +73,7 @@ export default function Page({ handleRegister, handleGoogleLogIn }) {
           {/* Login Link */}
           <div className="text-accent text-center mt-3">
             Have an account?{" "}
-            <Link href="/auth-layout" className="text-green-500 font-medium">
+            <Link href="/login" className="text-green-500 font-medium">
               Log In
             </Link>
           </div>

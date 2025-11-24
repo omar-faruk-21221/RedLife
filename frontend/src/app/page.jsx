@@ -1,48 +1,81 @@
+"use client";
+import Bannar from "@/app/Bannar";
 
-import Bannar from "@/components/Bannar";
-
-import HowWork from "@/components/HowWork";
-import OurStatistics from "@/components/OurStatistics";
-import Review from "@/components/Review";
+import HowWork from "@/app/HowWork";
+import OurStatistics from "@/app/OurStatistics";
+import Review from "@/app/Review";
+import DonarCard from "@/components/DonarCard";
 import Image from "next/image";
-// import HeroBanner from "./HeroBannar";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [donors, setDonors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  console.log(donors, loading);
+  useEffect(() => {
+    fetch("/donar.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setDonors(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
   return (
-    <div className="">
+    <div>
       <header>
         {/* <HeroBanner/> */}
         <Bannar></Bannar>
       </header>
       <main className="max-w-7xl mx-auto space-y-5">
         {/* top donnar  */}
-        <section>
-
+        <section className="my-15">
+          <div className="w-full flex justify-between items-center">
+            <h2 className="text-4xl font-bold">Top Donars</h2>
+            <Link className="btn btn-primary" href={'/all-donars'}>Show All</Link>
+          </div>
+          <span className="divider"></span>
+          {loading ? (
+            <p className="text-center text-gray-500">Loading donors...</p>
+          ) : donors.length === 0 ? (
+            <p className="text-center text-gray-500">No donors found.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20">
+              {donors.map((donar) => (
+                <DonarCard key={donar.id} donar={donar} />
+              ))}
+            </div>
+          )}
         </section>
 
         {/* our Communite */}
         <section></section>
 
-
         {/* -----------------------------------------  */}
         {/* our Review */}
-        <section className=" bg-primary-content rounded-2xl px-15 pb-10" >
-          <h1 className="text-4xl py-7 text-center font-bold text-primary" >Review</h1>
+        <section className=" bg-primary-content rounded-2xl px-15 pb-10">
+          <h1 className="text-4xl py-7 text-center font-bold text-primary">
+            Review
+          </h1>
           <Review />
         </section>
         {/* ------------------------------ */}
-          {/* statics  */}
+        {/* statics  */}
         <section>
           <OurStatistics />
         </section>
         {/* how itsworks */}
         <section className="bg-secondary-content rounded-2xl px-15 pb-10">
-          <h1 className=" w-fit bg-base-300 text-3xl  rounded-b-2xl  px-6 py-3 text-center font-bold text-primary mx-auto">How it's Work</h1>
+          <h1 className=" w-fit bg-base-300 text-3xl  rounded-b-2xl  px-6 py-3 text-center font-bold text-primary mx-auto">
+            How it's Work
+          </h1>
           <HowWork />
         </section>
-
       </main>
-
-    </div >
+    </div>
   );
 }
