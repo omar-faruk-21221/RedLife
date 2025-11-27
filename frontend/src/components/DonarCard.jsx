@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
 // import Link from "next/link";
@@ -6,8 +5,9 @@ import React from "react";
 import { FaUser } from "react-icons/fa";
 
 export default function DonarCard({ donar }) {
-  console.log(donar);
+  // console.log(donar);
   const {
+    _id,
     serviceArea,
     profileImage,
     lastDonateDate,
@@ -16,15 +16,7 @@ export default function DonarCard({ donar }) {
     availability,
     age,
   } = donar;
-  const {
-    _id,
-    name,
-    district,
-    image,
-    lastDonatedDate,
-    donatedTimes,
-    priorityRating,
-  } = donar || {};
+  console.log(_id);
   return (
     <div className=" mb-10 rounded-xl  shadow-md items-center hover:scale-107 bg-secondary-content hover:bg-secondary transition transform cursor-pointer ease-in-out">
       <figure className="">
@@ -61,13 +53,19 @@ export default function DonarCard({ donar }) {
             <span className="font-semibold">Last Donate:</span> {lastDonateDate}
           </p>
         </section>
-
         <Link
-          href={"/all-donors"}
-          className="mt-4 btn btn-primary text-white rounded-md font-semibold transition w-full"
+          href={`/all-donars/${_id}`}
+          className="btn btn-primary mt-4 w-full rounded-md text-white font-semibold"
         >
           View Details
         </Link>
+
+        {/* <Link
+          href={`/all-donars/${_id}`}
+          className="mt-4 btn btn-primary text-white rounded-md font-semibold transition w-full"
+        >
+          View Details
+        </Link> */}
       </main>
     </div>
   );

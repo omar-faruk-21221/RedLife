@@ -9,18 +9,22 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function Home() {
   const [topDonors, setTopDonors] = useState([]);
   const [loading, setLoading] = useState(true);
   // console.log(topDonors, loading);
   useEffect(() => {
-    axios("http://localhost:5000/topDonars").then((res) => {
-      // console.log("top doners",res.data)
-      setTopDonors(res.data);
-      setLoading(false);
-    });
+    axios("http://localhost:5000/topDonars")
+      .then((res) => {
+        setTopDonors(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
   }, []);
+
   return (
     <div>
       <header>
@@ -43,7 +47,7 @@ export default function Home() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20">
               {topDonors.map((donar) => (
-                <DonarCard key={donar.id} donar={donar} />
+                <DonarCard key={donar._id} donar={donar} />
               ))}
             </div>
           )}
@@ -68,11 +72,12 @@ export default function Home() {
         {/* how itsworks */}
         <section className="bg-secondary-content rounded-2xl px-15 pb-10">
           <h1 className=" w-fit bg-base-300 text-3xl  rounded-b-2xl  px-6 py-3 text-center font-bold text-primary mx-auto">
-            How it's Work
+            How its Work
           </h1>
           <HowWork />
         </section>
       </main>
+     
     </div>
   );
 }

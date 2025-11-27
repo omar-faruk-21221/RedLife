@@ -29,7 +29,7 @@ async function run() {
     app.post('/donars', async (req, res) => {
       try {
         const donarInfo = req.body;
-        console.log("Received data from frontend:", donarInfo);
+        // console.log("Received data from frontend:", donarInfo);
         donarInfo.createAt = new Date();
         const result = await donarCollection.insertOne(donarInfo);
         console.log("Insertion result:", result);
@@ -48,9 +48,23 @@ async function run() {
       const result = await donarCollection.find({}).toArray()
       res.send(result)
     })
-    app.delete('/donars/:id',async(req,res)=>{
+    // GET by id
+    app.get("/donars/:id", async (req, res) => {
+      try {
+        const { id } = req.params;
+        console.log(id)
+        if (!ObjectId.isValid(id)) return res.status(400).send({ message: "Invalid id" });
+        const donar = await donarCollection.findOne({ _id: new ObjectId(id) });
+        if (!donar) return res.status(404).send({ message: "Donor not found" });
+        res.send(donar);
+      } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: "Server error" });
+      }
+    });
+    app.delete('/donars/:id', async (req, res) => {
       const id = req.params.id
-      const query = {_id: new ObjectId(id)}
+      const query = { _id: new ObjectId(id) }
       const result = await donarCollection.deleteOne(query)
       if (result.deletedCount > 0) {
         res.send({ message: "Donor deleted successfully" });
