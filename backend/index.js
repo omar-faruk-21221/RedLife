@@ -5,7 +5,15 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: [
+    "http://localhost:3000",               // local dev
+    "https://redlife-frontend.vercel.app"  // Vercel deployed frontend
+  ],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASS}@cluster0.zfo7i3z.mongodb.net/redlife_DB?retryWrites=true&w=majority`;

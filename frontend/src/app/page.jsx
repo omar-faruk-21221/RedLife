@@ -5,6 +5,7 @@ import HowWork from "@/app/HowWork";
 import OurStatistics from "@/app/OurStatistics";
 import Review from "@/app/Review";
 import DonarCard from "@/components/DonarCard";
+import { apiClient } from "@/utilitics/api";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,13 +17,16 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   // console.log(topDonors, loading);
   useEffect(() => {
-    axios("http://localhost:5000/topDonars")
+    apiClient
+      .get("/topDonars")
       .then((res) => {
         setTopDonors(res.data);
-        console.log(res.data);
+        setLoading(false);
       })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        console.error("Error fetching top donors:", err);
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -77,7 +81,6 @@ export default function Home() {
           <HowWork />
         </section>
       </main>
-     
     </div>
   );
 }
