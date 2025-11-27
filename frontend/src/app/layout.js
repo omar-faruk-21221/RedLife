@@ -2,6 +2,7 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ToastContainer } from "react-toastify";
 // import { Geist, Geist_Mono } from "next/font/google";
 
 
@@ -19,7 +20,9 @@ export default function RootLayout({ children }) {
       <body>
         {/* Client Components */}
         <Navbar />
-        <main className="min-h-screen">{children}</main>
+        <main className="min-h-screen">{children}
+          <ToastContainer/>
+        </main>
         <Footer />
       </body>
     </html>

@@ -1,33 +1,75 @@
-// backend/index.js
 const express = require('express');
 const cors = require('cors');
-const app = express();
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
+
+const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-let products = []; // Temporary in-memory store
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASS}@cluster0.zfo7i3z.mongodb.net/redlife_DB?retryWrites=true&w=majority`;
 
-// Routes
-app.get('/',(req,res)=>{
-    res.send("server get data")
-})
-app.get('/products', (req, res) => {
-  res.json(products);
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
 });
 
-app.post('/products', (req, res) => {
-  const product = { id: Date.now(), ...req.body };
-  products.push(product);
-  res.status(201).json({ message: 'Product added', product });
-});
+async function run() {
+  try {
+    await client.connect();
+    const db = client.db("redlife_DB");
+    const donarCollection = db.collection("donars");
 
-app.delete('/products/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  products = products.filter(p => p.id !== id);
-  res.json({ message: 'Product deleted' });
-});
+
+    // --------------donar data api ------
+    app.post('/donars', async (req, res) => {
+      try {
+        const donarInfo = req.body;
+        console.log("Received data from frontend:", donarInfo);
+        donarInfo.createAt = new Date();
+        const result = await donarCollection.insertOne(donarInfo);
+        console.log("Insertion result:", result);
+        res.status(201).send(result);
+      } catch (error) {
+        console.error("Error inserting donar:", error);
+        res.status(500).send({ error: "Failed to insert donar data" });
+      }
+    });
+
+    app.get('/topDonars', async (req, res) => {
+      const result = await donarCollection.find({}).sort({ createAt: -1 }).limit(6).toArray()
+      res.send(result)
+    })
+    app.get('/donars', async (req, res) => {
+      const result = await donarCollection.find({}).toArray()
+      res.send(result)
+    })
+    app.delete('/donars/:id',async(req,res)=>{
+      const id = req.params.id
+      const query = {_id: new ObjectId(id)}
+      const result = await donarCollection.deleteOne(query)
+      if (result.deletedCount > 0) {
+        res.send({ message: "Donor deleted successfully" });
+      } else {
+        res.status(404).send({ message: "Donor not found" });
+      }
+    })
+
+    app.get('/', (req, res) => {
+      res.send("Server is running");
+    });
+
+    console.log("Connected to MongoDB and server ready...");
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+  }
+}
+
+run().catch(console.dir);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -4,12 +4,12 @@ module.exports = {
     themes: [
       {
         mycustomtheme: {
-          "primary": "#E63946",            
-          "primary-focus": "#B32B37",
-          "primary-content": "#FFFFFF",
+          "primary": "#F08080",
+          "primary-focus": "#C46C6C",
+           "primary-content": "#FFFFFF",
 
-          "secondary": "#F08080",
-          "secondary-focus": "#C46C6C",
+          "secondary": "#E63946",
+          "secondary-focus": "#B32B37",
           "secondary-content": "#FFFFFF",
 
           "accent": "#FFB6B9",

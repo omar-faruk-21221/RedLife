@@ -14,7 +14,7 @@ export default function Navbar() {
         <Link href="/add-donar">Add Donar</Link>
       </li>
       <li>
-        <Link href="/manage-Donar">Manage Donar</Link>
+        <Link href="/manage-donar">Manage Donar</Link>
       </li>
     </>
   );

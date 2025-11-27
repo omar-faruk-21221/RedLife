@@ -5,30 +5,25 @@ import HowWork from "@/app/HowWork";
 import OurStatistics from "@/app/OurStatistics";
 import Review from "@/app/Review";
 import DonarCard from "@/components/DonarCard";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [donors, setDonors] = useState([]);
+  const [topDonors, setTopDonors] = useState([]);
   const [loading, setLoading] = useState(true);
-  console.log(donors, loading);
+  // console.log(topDonors, loading);
   useEffect(() => {
-    fetch("/donar.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setDonors(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
+    axios("http://localhost:5000/topDonars").then((res) => {
+      // console.log("top doners",res.data)
+      setTopDonors(res.data);
+      setLoading(false);
+    });
   }, []);
   return (
     <div>
       <header>
-        {/* <HeroBanner/> */}
         <Bannar></Bannar>
       </header>
       <main className="max-w-7xl mx-auto space-y-5">
@@ -36,16 +31,18 @@ export default function Home() {
         <section className="my-15">
           <div className="w-full flex justify-between items-center">
             <h2 className="text-4xl font-bold">Top Donars</h2>
-            <Link className="btn btn-primary" href={'/all-donars'}>Show All</Link>
+            <Link className="btn btn-primary" href={"/all-donars"}>
+              Show All
+            </Link>
           </div>
           <span className="divider"></span>
           {loading ? (
             <p className="text-center text-gray-500">Loading donors...</p>
-          ) : donors.length === 0 ? (
+          ) : topDonors.length === 0 ? (
             <p className="text-center text-gray-500">No donors found.</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20">
-              {donors.map((donar) => (
+              {topDonors.map((donar) => (
                 <DonarCard key={donar.id} donar={donar} />
               ))}
             </div>
