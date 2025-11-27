@@ -1,33 +1,24 @@
 "use client";
 import Bannar from "@/app/Bannar";
-
 import HowWork from "@/app/HowWork";
 import OurStatistics from "@/app/OurStatistics";
 import Review from "@/app/Review";
 import DonarCard from "@/components/DonarCard";
 import { apiClient } from "@/utilitics/api";
-import axios from "axios";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
 
 export default function Home() {
   const [topDonors, setTopDonors] = useState([]);
   const [loading, setLoading] = useState(true);
-  // console.log(topDonors, loading);
-  useEffect(() => {
-    apiClient
-      .get("/topDonars")
-      .then((res) => {
-        setTopDonors(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching top donors:", err);
-        setLoading(false);
-      });
-  }, []);
+  console.log(topDonors, loading);
+useEffect(() => {
+  apiClient.get("/topDonors")
+    .then(res => setTopDonors(res.data))
+    .catch(err => console.error(err))
+    .finally(() => setLoading(false));
+}, []);
+
 
   return (
     <div>

@@ -1,15 +1,18 @@
 "use client";
+import { apiClient } from "@/utilitics/api";
 import { data } from "autoprefixer";
 import axios from "axios";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function page() {
   const [donors, setDonors] = useState([]);
 
+  // ========== data get ========
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/donars")
+    apiClient
+      .get("/donors")
       .then((res) => {
         console.log("donars from database", res.data);
         setDonors(res.data);
@@ -17,29 +20,17 @@ export default function page() {
       .catch((err) => console.error(err));
   }, []);
   //  --------- add features -------
-  const handleDonarDetails = (donor) => {
-    console.log("Donnar Details", donor);
-    toast.info(
-      `Donor: ${donor.name}\nEmail: ${donor.email}\nPhone: ${donor.phone}`
-    );
-  };
 
-  // state ধরছি: const [donors, setDonors] = useState([]);
-
-  const handleDonarRemove = (donor) => {
-    const id = donor._id;
-    axios
-      .delete(`http://localhost:5000/donars/${id}`)
-      .then(() => {
-        toast.success("Donor deleted successfully !!!");
-        setDonors((prevDonors) =>
-          prevDonors.filter((d) => d._id !== donor._id)
-        );
-      })
-      .catch((err) => {
-        toast.error("Failed to delete donor");
-        console.error(err);
-      });
+  const handleDonarRemove = async (donor) => {
+    // console.log(donor);
+    try {
+      const res = await apiClient.delete(`/donors/${donor._id}`);
+      toast.success(res.data.message);
+      setDonors((prev) => prev.filter((d) => d._id !== donor._id));
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to delete donor");
+      console.error(err);
+    }
   };
 
   return (
@@ -89,12 +80,12 @@ export default function page() {
                     <td className="py-2 px-4">{donor.phone}</td>
                     <td className="py-2 px-4 font-bold">{donor.bloodGroup}</td>
                     <td className="py-2 px-4 font-bold space-x-5">
-                      <button
-                        onClick={() => handleDonarDetails(donor)}
+                      <Link
+                        href={`/all-donars/${donor._id}`}
                         className="btn btn-accent"
                       >
                         Details
-                      </button>
+                      </Link>
                       <button
                         onClick={() => handleDonarRemove(donor)}
                         className="btn btn-warning"

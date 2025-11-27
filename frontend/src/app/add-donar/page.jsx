@@ -1,8 +1,10 @@
 "use client";
+import { apiClient } from "@/utilitics/api";
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function Page() {
   const {
@@ -15,16 +17,32 @@ export default function Page() {
   const handleAddDonar = async (data) => {
     try {
       console.log("form data", data);
-      const res = await axios.post("http://localhost:5000/donars", data);
+      const res = await apiClient.post("/donors", data)
       console.log("Data saved:", res.data);
-      toast.success("Donar added successfully!");
+      Swal.fire({
+        title: "Added Donor Completed",
+        showClass: {
+          popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `,
+        },
+        hideClass: {
+          popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `,
+        },
+      });
+      // toast.success("Donor added successfully!");
       reset();
     } catch (err) {
       console.error("Error in saving donor:", err);
       toast.error("Failed to add donor.");
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center py-10 px-4">
       <div className="bg-base-100 w-full max-w-4xl rounded-2xl shadow-lg border-2 border-primary">
@@ -62,9 +80,7 @@ export default function Page() {
               })}
             />
             {errors.phone && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.age.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.age.message}</p>
             )}
           </fieldset>
 

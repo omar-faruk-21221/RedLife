@@ -13,12 +13,12 @@ export default function RootLayout({ children }) {
   return (
     <html data-theme="mycustomtheme" lang="en">
       <body suppressHydrationWarning={true}>
-        <Navbar />
-        <main className="min-h-screen">
-          {children}
-          <ToastContainer />
-        </main>
-        <Footer />
+          <Navbar />
+          <main className="min-h-screen">
+            {children}
+            <ToastContainer />
+          </main>
+          <Footer />
       </body>
     </html>
   );

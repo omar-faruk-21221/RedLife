@@ -1,5 +1,6 @@
 "use client";
 import DonarCard from "@/components/DonarCard";
+import { apiClient } from "@/utilitics/api";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -10,7 +11,7 @@ export default function page() {
   const [loading, setLoading] = useState(true);
   console.log(donors, loading);
   useEffect(() => {
-    axios("http://localhost:5000/donars").then((res) => {
+    apiClient.get("/donors").then((res) => {
       // console.log("top doners",res.data)
       setDonors(res.data);
       setLoading(false);
