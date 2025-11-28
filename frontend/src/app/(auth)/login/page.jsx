@@ -1,38 +1,27 @@
 "use client";
-
-import React from "react";
-import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
-import { useForm } from "react-hook-form";
+import { useRouter, useSearchParams } from "next/navigation";
 import useAuth from "@/context/useAuth";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation"; // App Router এর জন্য
 import GoogleLogIn from "@/components/GoogleLogIn";
+import Link from "next/link";
 
-export default function Page({ handleGoogleLogIn }) {
+export default function LoginPage() {
   const { loginUser } = useAuth();
-  const router = useRouter(); // router enable
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get("redirect") || "/"; // যদি না থাকে, home
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm();
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
 
-  const handleLogIn = (data) => {
-    console.log("login", data);
-    loginUser(data.email, data.password)
-      .then((userContainer) => {
-        toast.success("Log in successful!!");
-        console.log(userContainer.user);
-
-        // ✅ Login successful হলে home page এ redirect
-        router.push("/");
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error(err.message); // alert এর পরিবর্তে toast
-      });
+  const handleLogIn = async (data) => {
+    try {
+      await loginUser(data.email, data.password);
+      toast.success("Logged in successfully!");
+      router.push(redirectPath); // login শেষে আগের route এ পাঠানো
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (
@@ -43,9 +32,8 @@ export default function Page({ handleGoogleLogIn }) {
             Log In
           </h1>
 
-          {/* Login Form */}
           <form onSubmit={handleSubmit(handleLogIn)}>
-            <fieldset className="fieldset space-y-3">
+            <fieldset className="space-y-3">
               <div>
                 <label className="label">Email</label>
                 <input
@@ -61,9 +49,7 @@ export default function Page({ handleGoogleLogIn }) {
                   })}
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.email.message}
-                  </p>
+                  <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
                 )}
               </div>
 
@@ -78,35 +64,22 @@ export default function Page({ handleGoogleLogIn }) {
                   })}
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.password.message}
-                  </p>
+                  <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
                 )}
               </div>
 
-              <div className="text-right">
-                <a className="link link-hover text-sm">Forgot password?</a>
-              </div>
-
-              <button
-                type="submit"
-                className="btn btn-primary w-full mt-2"
-                disabled={isSubmitting}
-              >
+              <button type="submit" className="btn btn-primary w-full mt-2" disabled={isSubmitting}>
                 {isSubmitting ? "Logging in..." : "Login"}
               </button>
             </fieldset>
           </form>
 
-          {/* Register Link */}
           <div className="text-accent text-center my-3">
-            Don't have an account?{" "}
-            <Link href="/register" className="text-red-500 font-medium">
-              Register
-            </Link>
+            Don't have an account? <Link href="/register" className="text-red-500 font-medium">Register</Link>
           </div>
+
           {/* Google Login */}
-          <GoogleLogIn />
+          <GoogleLogIn redirectPath={redirectPath} />
         </div>
       </div>
     </div>
