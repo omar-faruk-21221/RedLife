@@ -1,7 +1,19 @@
 "use client";
+import { useState, useEffect } from "react";
+import useAuth from "@/context/useAuth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function Navbar() {
+  const { user, logOut } = useAuth();
+  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const Links = (
     <>
       <li>
@@ -19,11 +31,22 @@ export default function Navbar() {
     </>
   );
 
+  const handleLogOut = async () => {
+    try {
+      await logOut();
+      toast.warning("Log Out Successfully!");
+      router.push("/");
+    } catch (err) {
+      console.error(err);
+      toast.error("Logout Failed");
+    }
+  };
+
+  if (!mounted) return null; // Prevent hydration mismatch
+
   return (
     <div className="navbar backdrop-blur-lg shadow-sm px-4 lg:px-8 sticky top-0 z-50">
-      {/* Navbar Start */}
       <div className="navbar-start">
-        {/* Mobile Dropdown */}
         <div className="dropdown">
           <div tabIndex={0} className="btn btn-ghost lg:hidden">
             <svg
@@ -48,28 +71,28 @@ export default function Navbar() {
             {Links}
           </ul>
         </div>
-        {/* Logo */}
         <Link href="/" className="text-2xl font-bold text-secondary-focus">
           RedLife
         </Link>
       </div>
 
-      {/* Navbar Center (Desktop Menu) */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{Links}</ul>
       </div>
 
-      {/* Navbar End */}
       <div className="navbar-end flex items-center gap-2">
-        <Link href="/login" className="btn btn-primary">
-          Log In
-        </Link>
-        <Link href="/register" className="btn btn-accent text-base-100">
-          Register
-        </Link>
-        <Link href="/" className="btn btn-secondary text-base-100">
-         Log Out
-        </Link>
+        {user ? (
+          <button
+            onClick={handleLogOut}
+            className="btn btn-secondary text-base-100"
+          >
+            Log Out
+          </button>
+        ) : (
+          <Link href="/login" className="btn btn-primary">
+            Log In
+          </Link>
+        )}
       </div>
     </div>
   );

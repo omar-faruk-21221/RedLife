@@ -20,8 +20,8 @@ export default function page() {
   // ----seach fitter ----
   const filteredDonors = donors.filter(
     (donar) =>
-      donar.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      donar.bloodGroup.toLowerCase().includes(searchTerm.toLowerCase())
+      donar?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      donar?.bloodGroup?.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return (
     <div className="">

@@ -17,7 +17,7 @@ export default function Page() {
   const handleAddDonar = async (data) => {
     try {
       console.log("form data", data);
-      const res = await apiClient.post("/donors", data)
+      const res = await apiClient.post("/donors", data);
       console.log("Data saved:", res.data);
       Swal.fire({
         title: "Added Donor Completed",
@@ -79,7 +79,7 @@ export default function Page() {
                 minLength: { value: 2, message: "Phone must be 2 digits" },
               })}
             />
-            {errors.phone && (
+            {errors.age && (
               <p className="text-red-500 text-sm mt-1">{errors.age.message}</p>
             )}
           </fieldset>
@@ -229,6 +229,7 @@ export default function Page() {
             </label>
             <input
               type="url"
+              defaultValue=""
               placeholder="https://example.com/photo.jpg"
               className="input input-bordered w-full"
               {...register("profileImage", {
@@ -248,6 +249,7 @@ export default function Page() {
             </label>
             <textarea
               rows="3"
+              defaultValue=""
               placeholder="Write something about yourself..."
               className="textarea textarea-bordered w-full"
               {...register("aboutYourself")}
