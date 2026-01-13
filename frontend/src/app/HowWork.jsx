@@ -7,7 +7,7 @@ export default function HowWork() {
       {steps.map(({ id, title, description, iconUrl, iconColor }) => (
         <div
           key={id}
-          className="p-6 border-2 bg-primary rounded-2xl text-base-300 shadow-2xl hover:shadow-lg transition hover:bg-primary-content hover:text-primary hover:scale-105"
+          className="p-6  bg-base-100 rounded-2xl shadow-lg hover:shadow-lg transition hover:bg-primary/10  hover:scale-103"
         >
           <Image
             src={iconUrl}
@@ -18,10 +18,8 @@ export default function HowWork() {
             style={{ filter: `drop-shadow(0 0 2px ${iconColor})` }}
           />
 
-          <h3 className="text-xl font-semibold mb-3 ">
-            {title}
-          </h3>
-          <p >{description}</p>
+          <h3 className="text-xl font-semibold mb-3 ">{title}</h3>
+          <p>{description}</p>
         </div>
       ))}
     </div>

@@ -28,6 +28,12 @@ export default function Navbar() {
       <li>
         <Link href="/manage-donar">Manage Donar</Link>
       </li>
+      <li>
+        <Link href="/about">About Us</Link>
+      </li>
+      <li>
+        <Link href="/contact">Contact Us</Link>
+      </li>
     </>
   );
 

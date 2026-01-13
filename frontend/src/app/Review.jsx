@@ -8,7 +8,7 @@ export default function Review() {
       {testimonials.map(({ id, name, image, review, rating }) => (
         <div
           key={id}
-          className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+          className="bg-base-300 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
         >
           <div className="flex items-center mb-4">
             {/* <Image

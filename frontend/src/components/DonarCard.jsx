@@ -18,7 +18,7 @@ export default function DonarCard({ donar }) {
   } = donar;
   console.log(_id);
   return (
-    <div className=" mb-10 rounded-xl  shadow-md items-center hover:scale-107 bg-secondary-content hover:bg-secondary transition transform cursor-pointer ease-in-out">
+    <div className=" rounded-xl items-center hover:scale-103 bg-base-300 shadow-lg hover:bg-secondary/75 transition transform cursor-pointer ease-in-out">
       <figure className="">
         <div className="w-ful h-[180px] bg-gray-400 rounded-2xl">
           {profileImage ? (
@@ -32,10 +32,10 @@ export default function DonarCard({ donar }) {
           )}
         </div>
       </figure>
-      <main className="p-6 ">
-        <h2 className="card-title text-3xl text-primary text-center mb-3">
+      <main className="p-4 space-y-2">
+        <h2 className="card-title text-xl text-primary text-center">
           {donarName}
-          <div className="badge bg-warning text-md p-2">{bloodGroup}</div>
+          <div className="badge bg-warning text-md p-1">{bloodGroup}</div>
         </h2>
 
         <section className="grid grid-cols-2 justify-between items-center gap-3">
@@ -45,12 +45,12 @@ export default function DonarCard({ donar }) {
           <p className="">
             <span className="font-semibold">Availability :</span> {availability}
           </p>
-          <p className="col-span-2">
-            <span className="font-semibold">Available Area:</span> {serviceArea}
+          <p className="text-wrap">
+            <span className="font-semibold">Available Area</span> {serviceArea}
           </p>
 
-          <p className="col-span-2">
-            <span className="font-semibold">Last Donate:</span> {lastDonateDate}
+          <p className="text-wrap">
+            <span className="font-semibold">Last Donate</span> {lastDonateDate}
           </p>
         </section>
         <Link
@@ -59,13 +59,6 @@ export default function DonarCard({ donar }) {
         >
           View Details
         </Link>
-
-        {/* <Link
-          href={`/all-donars/${_id}`}
-          className="mt-4 btn btn-primary text-white rounded-md font-semibold transition w-full"
-        >
-          View Details
-        </Link> */}
       </main>
     </div>
   );
