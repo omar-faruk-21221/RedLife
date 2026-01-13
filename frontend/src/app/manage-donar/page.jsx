@@ -36,7 +36,7 @@ export default function page() {
 
   return (
     <PrivateRoute>
-      <div className="bg-secondary-content min-h-screen">
+      <div className="min-h-screen">
         <header className="py-5">
           <h1 className="text-4xl font-bold text-center  text-secondary">
             Manage Donor

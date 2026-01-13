@@ -47,7 +47,7 @@ export default function Footer() {
       {/* Decorative background glow */}
       <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-secondary/20 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 right-10 h-40 w-40 rounded-full bg-accent/20 blur-2xl" />
-      <main className="flex md:max-w-7xl mx-auto w-full justify-between items-center gap-10">
+      <main className="flex flex-col md:flex-row md:max-w-7xl mx-auto w-full justify-between items-center gap-10">
         {/* Brand / meaning */}
         <aside className="relative space-y-3 text-left">
           <div className="flex items-center gap-3 ">

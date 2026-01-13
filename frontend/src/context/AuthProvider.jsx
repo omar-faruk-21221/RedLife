@@ -7,8 +7,8 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
-  GoogleAuthProvider,    // <-- add this
-  signInWithPopup,       // <-- add this
+  GoogleAuthProvider, // <-- add this
+  signInWithPopup, // <-- add this
 } from "firebase/auth";
 
 export const AuthContext = createContext(null);
@@ -31,6 +31,10 @@ export default function AuthProvider({ children }) {
   const logInGoogle = () => {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider);
+  };
+  //---- updateUserProfile ----
+  const updateUserProfile = (profile) => {
+    return updateUserProfile(auth.currentUser, profile);
   };
 
   useEffect(() => {
